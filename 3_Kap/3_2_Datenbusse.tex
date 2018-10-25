@@ -1,0 +1,207 @@
+Der Raspberry Pi Modell B stellt verschiedene Bussysteme zur Verfügung. Bussysteme,
+auch als Bus abgekürzt, werden für die Datenübertragung zwischen verschiedenen Teilnehmern
+benutzt \cite[vgl.][S. 455]{Kof2015}. Je nach verwendetem Bussystem werden die
+Daten seriell, also hintereinander über dieselben Datenleitungen oder parallel,
+also gleichzeitig über verschiedenen Datenleitungen übertragen. Auf dem Raspberry
+Pi Modell B sind folgende fünf Bussysteme verfügbar, bei dem alle Daten seriell
+übertragen werden \cite[vgl.][S. 455]{Kof2015},
+
+\begin{itemize}
+	\item UART, Abk. für Universal Asynchronous Receiver/Transmitter.
+	\item SPI, Abk. für Serial Peripheral Interface
+	\item I$^{2}$C, Abk. für Inter Integrated Circuit
+	\item I$^{2}$S, Abk. für Integrated Interchip Sound
+	\item 1Wire, Eindraht-Verbindung.
+\end{itemize}
+
+Da in dieser Arbeit der UART und I$^{2}$C verwendet werden, werden diese zwei
+Bussysteme beschrieben. Die vollständige Erläuterung der Bussysteme würde den
+Rahmen dieser Arbeit sprengen, daher werden nur die grundlegenden Punkte erläutert.
+Die Bussysteme unterscheiden sich nicht nur, aber vor allem in der Datenübertragung.
+Dabei soll es zwei grundsätzliche Formen der Datenübertragung geben, die sich vor
+allem bei der Synchronisation durch einen Takt unterscheiden \citealp[vgl.][S. 202 - S. 203]{Bei2011}:
+
+Bei der \underline{synchronen Datenübertragung} wird parallel zur Datenübertragung der Takt
+übertragen. Durch die Taktübertragung können die Kommunikationspartner den Be-ginn und das
+Ende einer Datenübertragung erkennen \cites[vgl.][S. 455]{Kof2015}[S. 202 bis S. 203]{Bei2011}.\\
+
+Bei der \underline{asynchronen Datenübertragung} existiert keine separate Taktleitung.
+Die Daten werden als einzelne Zeichen übertragen. Dabei werden diese in Start- und Stoppbits
+verpackt. Die Start- und Stoppbits können variieren \cites[vgl.][S. 203]{Bei2011}.\\
+
+Der Vollständigkeit halber wird im Folgenden der 1Wire und I$^{2}$S beschrieben.
+Beim 1-Wire Bus handelt es sich um einen Eindraht-Bus, deshalb auch der Name des
+Bussystems [vgl. Kof2015 S.491]. Der, ursprünglich vom Unternehmen Dallas (heute Maxim) [vgl. Gei S. 3]
+entwickelte 1-Wire-Bus besitzt im Vergleich zu SPI und I$^{2}$C keine zusätzliche Taktleitung.
+Dabei handelt es sich also um eine asynchrone Datenübertragung. 1-Wire-Bus führt lediglich
+neben der einzelnen Leitung zur Bus-kommunikation, also der Datenleitung mit der
+Bezeichnung DQ, noch die Masse Lei-tung [vgl. Gei S. 3 und Kof2015 S.491]. Die Datenleitung
+wird nicht nur dazu benutzt, um Daten zu senden und zu empfangen, sondern auch
+um die Erweiterungen mit ei-ner Versorgungsspannung von 3,3 Volt zu versorgen [vgl. msx und Kof2015 S.491].
+Die Übertragung erfolgt dabei seriell, bidirektional und asynchron, da über die Datenleitung
+entweder nur gesendet oder empfangen werden kann und dies auch ohne Taktleitung erfolgt [vgl. Gei S. 3].
+
+Der Raspberry Pi bietet ab der Revision 2 den Soundbus I$^{2}$S, Abk. für Integrated Interchip Sound.
+Der I$^{2}$S Bus transportiert Audiosignale zwischen integrierten Schalt-kreisen. [vgl. Kof2015 S.489].
+
+Das ursprünglich von Motorola entwickelte Bussystem Serial Peripheral Interface (SPI)
+arbeitet nach dem Master-Salve-Prinzip, mit einem Master und einer theore-tisch unbegrenzten
+Anzahl an Slaves. Dabei erfolgt die Kommunikation Synchron [vgl. Bei2011 S. 208].\\
+
+\subsection{UART}
+\label{sec:UART}
+
+Der Universal Asynchrounous Receiver/Transmitter (kurz UART) Protokoll wird bei der Kommunikation von
+RS232- oder RS485-Schnittstellen eingesetzt. Der UART wird auch zur Datenübertragung mit 
+Mikrocontrollern und wie hier mit Einplatinen-Computern benutzt.
+
+Die Daten werden beim UART, im Gegensatz zum USART, der eine synchrone Da-tenübertragung erlaubt,
+asynchron übertragen. Das heißt dass es keine Taktleitung gibt. Der UART besitzt im Ruhezustand einen
+High-Pegel, was der logischen 1 ent-spricht. [vgl. Pla uart] Die Daten werden mit einem Start- und
+Stoppbit versehen. Es kann zusätzlich einen Paritätsbit geben.  Üblicherweise werden acht bis neun Bits 
+übertragen [vgl. MUA]. Dabei werden also insgesamt 10 bis 12 Bits zusammen über-tragen. Diese werden 
+auch als Wort bzw. Datenwort bezeichnet. Die Reihenfolge der übertragenen Bits sieht beim UART 
+folgendermaßen aus:
+
+\begin{table}[htbp]
+	\centering
+	\caption{Aufbau des UART-Datenwortes}
+	\label{tab:AufbauDesUARTDatenwortes}
+		\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
+		\hline
+		Startbit & D0 & D1 & D2 & D3 & D4 & D5 & D6 & D7 &\cellcolor[rgb]{1,1,0}{(D8)}&\cellcolor[rgb]{1,1,0}{(Paritätsbit)}& Stoppbit \\ \hline
+		\end{tabular}
+\end{table}
+
+Bei der obigen Abbildung zum Aufbau des UART-Datenwortes ist jedes Kästchen für ein Bit gedacht. Der Startbit wird als eine Logische 0 gesendet [vgl. Pla uart]. Zwischen zwei Datenworten können sich beliebig lange Pausen befinden, da jedes Wort am Startbit erkannt wird [vgl. Pla uart]. Die Bits D8, also der neunte Datenbit und die Paritätsbits sind gelb hintermalt, da diese optional sind.
+
+Das Paritätbit überprüft, ob die Daten richtig übertragen wurden. Dabei wird zwischen
+odd parity und even parity unterschieden. Bei odd parity wird der Paritätsbit auf eins
+gesetzt, wenn es in den Datenbits eine gerade Anzahl an Einsen gibt [vgl. Mül2009 S. 6].
+
+Even parity bildet den Gegensatz zur odd parity. Bei einer geraden Anzahl von Datenbits
+wird das Paritätsbit auf Null und bei einer ungeraden Anzahl auf eins gesetzt [vgl. Mül2009 S. 6].
+
+Beim Stoppbit muss erwähnt werden, dass auch zwei Stoppbits hinter ein Daten-wort eingefügt
+werden können, um den Pausenpegel zwischen zwei Datenworten bei der Übertragung zu trennen
+[vgl. Bei2011 S. 262]. Da die Kommunikation beim UART asynchron abläuft synchronisieren
+sich die Kommunikationsteilnehmer für jeden Transfer neu [vgl. Pla uart]. Dies geschieht
+durch die oben erwähnten Start- und Stoppbits. Vor der Datenübertragung liegt der Pegel auf
+der Übertragungsleitung auf high [vgl. Pla uart]. Das bedeutet, dass die Leitung sich auf 3,3 Volt befindet.
+
+Vor der Kommunikation zwischen Sender und Empfänger müssen diesen die Anzahl der
+Datenbits, Startbits und der Stoppbits sowie der Berechnung der Parität und die Frequenz
+des Übertragungstaktes der Daten kenntlich gemacht werden. Soll et-was übertragen werden,
+wird dies dem Empfänger der Daten durch den Startbit kenntlich gemacht. Anhand des
+High-Low-Pegels wird der Sendevorgang kenntlich gemacht, wodurch Empfänger und Sender
+synchronisiert sind. Der Sendevorgang wird durch einen Stoppbit beendet [vgl. Pla uart].
+Der UART am Raspberry Pi besitzt die Leitungen TxD (am Pin 8) zum Senden und RxD (am Pin 10)
+zum Empfangen der Daten [vgl. Upt2014 S. 222]. Das Raspberry besitzt keine Leitung für einen
+Hardware-Handshake [vgl. Pla uart], zur Erkennung der Übertragung. Wird ein hardwarebasierter
+Handshake benötigt, kann auf einen freien GPIO-Pin zugegriffen werden [vgl. Pla uart].
+
+Ein Baudratengenerator bzw. programmierbarer Timer sorgt für die Übertragungsgeschwindigkeit,
+auch Baud oder Baudrate genannt, der Daten [vgl. Bei2011 S. 262]. Die Baudraten
+müssen sowohl auf Empfängerseite als auch auf der Senderseite ü-bereinstimmen,
+da die Daten sonst nicht korrekt übertragen werden können. Das hat den Hintergrund,
+dass der UART - wie oben erwähnt - keine Taktleitung hat und der Empfänger nicht weiß,
+wann über UART Daten geschickt werden und wann nicht.
+
+
+\subsection{I$^{2}$C}
+\label{sec:I2C}
+
+Das im Jahre 1982 von Philips Semiconductor entwickelte Bussystem Inter Intergratet Circuit (I$^{2}$C)
+wird für die Verbindung von integrierten Schaltungen auf Platinen bzw. innerhalb von Geräten
+eingesetzt [vgl. Bei2011 S. 209 und Dem2013 S. 185]. Beim I$^{2}$C handelt es sich um eine
+serielle Schnittstelle [vgl. Dem2013 S. 185], bei der die Datenübertragung sowohl synchron
+als auch asynchron erfolgt [vgl. Bei2011 263 bis S. 264].\\
+
+Das Bussystem kann mit zwei bzw. drei Leitungen eingesetzt werden. Eine Leitung dient als
+Taktleitung, eine zweite als Datenleitung, wobei die dritte Leitung die Mas-seleitung ist,
+die als Bezugspegel dient [vgl. Bei2011 S. 209]. I$^{2}$C besitzt keine sepa-rate Leitung zum
+Auswählen der einzelnen Teilnehmer. Die einzelnen Teilnehmer werden durch Adressen
+ausgewählt [vgl. Kof2015 S.476]. Beim Raspberry Piwird der I$^{2}$C Datenbus auch vom BCM2835,
+also dem SoC, bereitgestellt [vgl. Upt2014 S. 223]. Der I$^{2}$C besitzt folgende Leitungen:
+
+\begin{description}
+	\item[SDA Serial Data- Line] hierüber werden die Daten zwischen den Kommunikationspartnern übertragen 
+	\item[SCL Serial Clock Line] Taktleitung des Bussystems
+\end{description}
+
+Die Übertragung der Daten erfolgt aus einer Mischung aus synchroner als auch asynchroner Übertragung. Das bedeutet, dass bei der Übertragung der einzelnen Datenpakete diese jeweils mit Start und Stoppbits versehen werden [vgl. Bei2011 263 bis S. 264]. Die Übertragung der einzelnen Bits der Datenpakete wird jedoch mit dem Taktsignal der SCL-Leitung des jeweiligen Masters synchronisiert übertragen [vgl. Bei2011 S. 264].\\
+
+An das Bussystem können ein oder mehrere Master angeschlossen werden, von denen jedoch mindestens einer die Kommunikation innerhalb des I$^{2}$C steuert [vgl. Bei2011 S. 209]. Ein Bus, der mehrere Master besitzt, wird auch als Multimasterbus bezeichnet [vgl. Dem2013 S. 187]. Am Bus können bis zu 128 Slaves angeschlossen werden, die eine im Bussystem eindeutige Adresse von sieben bzw. zehn Bit Länge besitzen [vgl. Dem2013 S. 189], wodurch die Slaves einzeln angesprochen werden können [vgl. Bei2011 S. 209 bis 210]. Die 10 Bit Adressierung soll kaum genutzt werden [vgl. Dem2013 S. 189]. Die Slaves können dadurch immer zum Senden bzw. Empfangen von Daten durch den Master aufgefordert werden. Der Empfang der Auf-forderung wird dem Master durch ein Quittierungsbit (auch Acknowledge bezeichnet) bestätigt [vgl. Bei2011 S. 210].\\
+
+Da I$^{2}$C-Busse in der Regel Open-Collector-Eingänge besitzen, versorgen die
+I$^{2}$C-Bausteine keine Spannungspegel an ihren Pins. Beim Raspberry Pi werden
+die I$^{2}$C Pins jedoch durch Pull-Up-Widerstände auf 3,3 Volt gezogen, dieser
+bildet dann den positiven Signalpegel [vgl. Bei2011 210]. Bei der Kommunikation
+über die I$^{2}$C- Schnittstelle werden diese Leitungen auf Masse gezogen [vgl. Kof2015 S.476],
+das bedeutet, dass diese Leitungen dann auf 0 Volt herunter gezogen werden und
+somit auch einen LOW-Pegel besitzen [vgl. Kof2015 S.476].
+
+\begin{table}[htbp]
+	\centering
+	\caption{Aufbau des UART-Datenwortes}
+	\label{tab:AufbauDesUARTDatenwortes}
+		\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+		\hline
+		Start & Slave & Adresse & Read/Write & Ackn. & Daten & Ackn. &  Daten & Ackn. & Stop \\ \hline
+		\end{tabular}
+\end{table}
+
+In der Abbildung befindet sich der Startbit ganz links und der Stoppbit ganz rechts.
+Beim "`Ackn."' handelt es sich um den Quittierungsbit, was nach jeder Datenübertragung vom Slave an den Master erfolgt.
+
+Beim I$^{2}$C kann jede Baugruppe, je nach Funktion, entweder als Sender oder als
+Empfänger arbeiten. Dabei können mehrere Master im System existieren. Die Erzeugung
+des Taktes erfolgt immer durch den Master, wobei jeder Master seine eige-ne Taktfrequenz
+besitzt [vgl. Dem2013 S. 187 bis S. 188].
+
+\begin{figure}[htbp]
+	\caption{Prinzipielles Aufbau des I$^{2}$C Datenformates}
+	\label{fig:I2C_Datenuebertragung}
+	\centering
+		\includegraphics[width=1.00\textwidth]{Bilder/I2C_Datenuebertragung.png}
+\end{figure}
+Da der Bus vom Raspberry Pimit einer Spannung von 3,3 Volt versorgt wird, befinden
+sich die Leitungen SDL und SCL im High-Pegel wenn keine Busaktivität stattfin-det [vgl. Kof2015 S.476].
+Es hat also den logischen Wert 1. Sollen Daten übertragen werden geht das Datensignal
+SDA von High auf Low über, gleichzeitig befindet sich jedoch die Taktleitung auf High.
+Dabei handelt es sich um den Startbit. Der Startbit ist in der Abbildung 3.8 auf der
+linken Seite umrahmt. Im Gegensatz dazu bildet der Stoppbit einen Low zum High-Übergang
+des SDL bei gleichzeitigem High Pegel der Taktleitung. Dieser ist in der Abbildung 3.8
+auf der rechten Seite umrahmt [vgl. rni].
+
+Mit der Slave Adresse, die in der Regel sieben Bit groß ist, wird das jeweilige Slave
+Bauelement des I$^{2}$C angesprochen. Der Read/Write Bit gibt die Richtung der
+Datenübertragungen an. Bei Read (logische 1), liest der Slave ein und bei Write (logische 0),
+schreibt der Slave. Die Richtung der Datenübertragung wird vom Slave an den Master gemeldet [vgl. rni und Dem2013 S. 189].
+
+Bei der Kommunikation über den I$^{2}$C erfolgt die Bestätigung, also der Quittierungsbit
+(in der Abbildung 3.8 als "`Ackn."' dargestellt), für die Übertragungsrichtung
+durch den Slave. Bei der Datenübertragung an sich bestätigt der Empfänger der Daten
+dem Sender den Empfang der Daten. Falls der Slave die Daten empfängt, setzt der Master
+den SDA auf High und erwartet vom Slave, dass dieser den SDA auf Low zieht. Geschieht
+das nicht, wird die Übertragung gestoppt. Im umgekehrten Fall, wenn der Master der Empfänger
+ist, setzt der Slave den SDA auf High, falls es nicht bestätigt wird, erfolgt der
+Abbruch der Datenübertragung [vgl. Dem2013 S. 189]. Die Bestätigung muss innerhalb
+von neun Takten des jeweiligen Masters erfolgen [vgl. rni]. Bei der Datenübertragung
+an sich muss der Takt selbst High sein, wenn ein Bit übertragen wird und dieser als
+gültig gelten soll [vgl. rni].
+
+Auf dem Raspberry Pi existieren zwei I$^{2}$C-Schnittstellen [vgl. Upt2014 S. 223].
+Der erste befindet sich in der GPIO-Schnittstelle mit der Bezeichnung P1. Der zweite
+bestimmt ist [vgl. Upt2014 S. 223]. Der Aufbau der zweiten I$^{2}$C Schnittstelle wird
+befindet sich an der GPIO Schnittstelle P5, welcher nicht für den allgemeinen Gebrauch
+am Anfang der Kapitels GPIO-Anschlüsse beschrieben. Die erste I$^{2}$C Schnittstelle
+kann über die GPIO-Schnittstelle mit der Bezeichnung P1 über zwei Pins benutzt werden.
+Dazu dient der Pin 3 als SDA, also als Datenleitung und der Pin 5 als SCL, also um den
+Takt für die Synchronisation der Kommunikation zu Übertragen. Die Pins sind mit zwei
+Pull-Up-Widerständen verschaltet [vgl. Dem2013 S. 188].
+
+Der I$^{2}$C arbeitet nach dem Master-Slave Prinzip. Beim Master handelt es sich um
+die aktive Komponente, beim Slave um die passive. Der Master steuert also die gesamte
+Kommunikation, sodass die Slaves lediglich auf die Anfragen des Masters an-sprechen müssen.
+

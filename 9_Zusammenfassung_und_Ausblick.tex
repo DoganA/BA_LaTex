@@ -1,0 +1,36 @@
+In dieser Abschlussarbeit wurde eine, aus zwei Bereichen bestehende, Softwarelösung
+entwickelt, die den eigenen Energieverbrauch visualisiert und dadurch die Möglichkeit
+aufgreift den eigenen Energieverbrauch zu analysieren. Die auf der Grundlage eines
+Linux-Betriebssystems entwickelte Software, welche auf einem Raspberry Pi läuft,
+wertet die empfangenen S0-Impulse in Energieverbrauchswerte um. Auf der Grundlage,
+von diesen als Linuxtreiber (auch Deamon bezeichnet) entwickelten Software
+ausgewerteten Verbrauchswerten, findet die Visualisierung, der ausgewerteten
+Energieverbrauchswerte statt. Die Visualisierungseinheit, also die Webseite befindet
+sich dann auf einem Webserver, der entweder auf einem Raspberry Pi oder einem vom
+Raspberry Pi physisch unabhängigen Server läuft. Die entwickelte Visualisierungseinheit
+bietet den Vorteil, dass nicht nur der bisherige Gesamtverbrauch, vom Zähler als
+Zahl abgelesen werden kann, sondern die Verbrauchswerte für einen bestimmten
+Zeitraum grafisch darzustellen werden. Zudem ist es durch die Auswahl der einzelnen
+Kanälen, die der Anzahl der S0-Anschlüssen der Erweiterung SD0 entsprechen, möglich
+die Verbrauchswerte verschiedener Zähler, gleichzeitig zu analysieren und miteinander
+zu vergleichen. Es wurde eine Anforderungsanalyse durchgeführt, die die Anforderungen
+an die entwickelte Softwarelösungen definieren soll. Mit deren Hilfe wurden dann
+im anschließenden Kapitel die Lösungen entworfen. Ausgehend vom Entwurf, der die
+Grundlage bzw. den Ausgangspunkt der realisierten Lösungen bildet, wurde die Lösung
+realisiert. Es wurde auch ein Parser zum Einlesen von Konfigurationsdateien verwendet.
+Dadurch kann die Software während der Laufzeit an verschiedene Zähler angepasst
+werden. Die Software, die auf dem Raspberry Pi läuft, wurde modular aufgebaut.
+Dadurch ist später eine einfache Erweiterung der schon entwickelten Software möglich.
+
+Der Vorteil bei der in dieser Abschlussarbeit eingesetzten S0-Schnittstelle ist,
+dass die Schnittstelle nicht nur für den Energieverbrauch, sondern auch für andere
+Verbrauchswerte wie Wärme, Wasser und Gas verwendet werden kann. Die entwickelte
+Software kann also in Verbindung mit den S0-Schnittstellen vielseitig verwendet
+werden.
+
+Eine Möglichkeit den Prototyp zu erweitern wäre, weitere Darstellungsformen und 
+-varianten hinzuzufügen. Das wäre beispielsweise die Darstellung der Verbrauchsdaten
+in einer App, also auf einem Smartphone oder Tablet. Es wäre auch möglich, weitere
+Daten, wie Tarifinformationen und bisherige Kosten für den Energie-verbrauch,
+darzustellen. Es wäre auch möglich, die aktuellen Energieverbrauchswerte mit den
+Verbrauchswerten des selben Zeitraums vergangener Jahre zu vergleichen.

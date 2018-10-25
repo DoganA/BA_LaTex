@@ -1,0 +1,204 @@
+Für das Monitoring von Energieverbrauchswerten soll eine Softwarelösung entwickelt werden. Es soll über die S0-Schnittstellen von Zählern Energieverbrauchswerte erfassen, anschließend verarbeiten und lokal abspeichern.
+
+Die abgespeicherten Verbrauchswerte sollen an einen Server gesendet werden.
+
+Die Visualisierung der Verbrauchswerte erfolgt grafisch über eine Weboberfläche. Dabei werden 
+die Energieverbrauchswerte entweder für einen bestimmten, vom Be-nutzer ausgewählten, 
+Zeitraum abgefragt. Oder die aktuellen Verbrauchswerte werden fortlaufend von der
+Messeinheit, also vom Aufsatz SD0 und dem Raspberry Pi abgefragt und auf dem Raspberry Pi 
+dargestellt.
+
+Die Verbrauchswerte werden über die S0-Schnittstellen des Aufsatzes SD0 gemessen. Die 
+gemessenen Daten werden anschließend vom Aufsatz über die serielle Schnittstelle, also dem 
+UART, des Raspberry Pi an diesen übertragen. Auf dem Raspberry Pi werden die S0-Impulse 
+verarbeitet und anschließend mit dem jeweiligen Zeitstempel des Zeitpunktes der Messung 
+versehen und abgespeichert.
+
+Die abgespeicherten Verbrauchswerte werden anschließend an einen Server weitergeleitet, wo 
+die Verbrauchswerte für einen, vom Benutzer bestimmten, Zeitraum grafisch dargestellt werden. 
+Der Server kann sich physisch an einem anderen Ort als der Raspberry Pi befinden. Dabei 
+erfolgt die Kommunikation über die Ethernet Schnittstelle. Alternativ kann die Webdarstellung 
+auf dem Raspberry erfolgen. Für die fortlaufende grafische Darstellung des Energieverbrauchs 
+muss sich die Webdarstellung auf dem Raspberry Pi befinden.
+
+\section{Muss-Kriterium}
+\label{sec:MussKriterium}
+
+%Counter
+\newcounter{MussKriterien}
+\setcounter{MussKriterien}{0}
+\newcommand{\MussKriterien}[1]{%
+  \stepcounter{MussKriterien}%
+  #10\theMussKriterien0
+}
+
+
+\textbf{\MussKriterien{M-ERF}} Erfassen der S0-Impulse am Zähler\\
+Durch S0-Impulse soll der Verbrauch am Stromzähler erfasst werden.
+\\
+
+\addtocounter{MussKriterien}{-1}
+\textbf{\MussKriterien{M-ERF}-10} Anzahl der verschiedenen, gemessenen Stromzählern\\
+Mit dem Aufbau muss möglich sein, an bis zu vier verschiedenen Stromzähler Stromzählern mit S0-Schnittstellen die S0-Impulse erfasst zu können.\\7
+\\
+
+\textbf{\MussKriterien{M-ERF}} Übergabe der erfassten S0-Impusle an den Raspberry Pi\\
+Die erfassten S0-Impulse werden nach dem Messvorgang dem Raspberry Pi über die GPIO-Schnittstelle übergeben.\\
+
+\textbf{\MussKriterien{M-VERA}}Umrechnung der übergebenen S0-Impusle\\
+Die gemessenen S0-Impusle, die an den Raspberry Pi übergeben wurden, müssen auf dem Raspberry Pi in Energieverbrauchswerte (Watt pro Stunde) umgerechnet werden.
+\\
+
+\textbf{\MussKriterien{M-VERA}}Abspeichern von umgerechneten Energieverbrauchswerten.\\
+Die von S0-Impuslen nach Energieverbrauchswerte umgerechneten Werte müssen auf dem Raspberry Pi abgespeichert werden.
+\\
+
+\textbf{\MussKriterien{M-SEN}} Senden der abgespeicherten Energieverbrauchsdaten.\\
+Alle abgespeicherten Dateien sollen an einen Server versendet werden können.
+\\
+
+\textbf{\MussKriterien{M-SEN}-10} Zeiten für das Senden der abgespeicherten Energieverbrauchsdaten\\
+Die abgespeicherten Dateien sollen zu bestimmten Uhrzeiten an einen Server versendet werden können.
+\\
+
+\textbf{\MussKriterien{M-SEN}-11}Zeiten für das Senden der abgespeicherten Energieverbrauchsdaten\\
+Die abgespeicherten Dateien sollen permanent an einen Server versendet werden können.
+\\
+
+\textbf{\MussKriterien{M-BEA}} Betriebsart der Software\\
+Die Software muss als Dienstprogramm laufen.
+\\
+
+\textbf{\MussKriterien{M-BEA}} Dauerhafter Betrieb der Software\\
+Die Software muss dauerhaft auf dem Raspberry Pi laufen.
+\\
+
+\textbf{\MussKriterien{M-BEA}} Starten der Software\\
+Die Software muss mit dem Systemstart der Raspberry Pi bzw. dessen Betriebssys-tems gestartet werden.
+\\
+
+\textbf{\MussKriterien{M-BEA}} Beenden der Software\\
+Die Software muss vom Benutzer durch Angabe der Prozessnummer der Software beendet werden können.
+\\
+
+\textbf{\MussKriterien{M-BEA}} Neustart der Software\\
+Die Software muss vom Benutzer neugestartet werden können.
+\\
+
+\textbf{\MussKriterien{M-KONF}} Einlesen einer Konfigurationsdatei\\
+Die Software muss während der Laufzeit eine Konfigurationsdatei einlesen können.
+\\
+
+\textbf{\MussKriterien{M- KONF}} Einlesen der Impulskonstante einer Konfigurationsdatei\\
+Die Software muss während der Laufzeit der Impulskonstante von bis zu vier unter-schiedlichen Stromzählern aus einer Konfigurationsdatei einlesen können.
+\\
+
+\textbf{\MussKriterien{M- KONF}} Einlesen der Empfängeradresse aus einer Konfigurationsdatei\\
+Die Software muss während der Laufzeit die IP-Adresse, an die die gespeicherten Energieverbrauchswerte gesendet werden sollen, aus einer Konfigurationsdatei ein-lesen können.
+\\
+
+\textbf{\MussKriterien{M- KONF}-10} Einlesen der Empfängeradresse aus einer Konfigurationsdatei\\
+Wird für die IP-Adresse, an denen die Daten gesendet werden sollen als Localhost oder 127.0.01 angegeben, verbleiben die Daten auf dem Raspberry Pi. Bei der Ad-resse handelt es sich um den Raspberry Pi selbst [vgl. loc].
+\\
+
+\textbf{\MussKriterien{M-KONF}}: Einlesen einer Konfigurationsdatei
+Die Software muss während der Laufzeit eine Konfigurationsdatei einlesen können.
+\\
+
+\textbf{\MussKriterien{M- KONF}}: Einlesen der Impulskonstante einer Konfigurationsdatei
+Die Software muss während der Laufzeit der Impulskonstante von bis zu vier unter-schiedlichen Stromzählern aus einer Konfigurationsdatei einlesen können.
+\\
+
+\textbf{\MussKriterien{M- KONF}}: Einlesen der Empfängeradresse aus einer Konfigurationsdatei
+Die Software muss während der Laufzeit die IP-Adresse, an die die gespeicherten Energieverbrauchswerte gesendet werden sollen, aus einer Konfigurationsdatei ein-lesen können.
+\\
+
+\textbf{\MussKriterien{M- KONF}-10}: Einlesen der Empfängeradresse aus einer Konfigurationsdatei
+Wird für die IP-Adresse, an denen die Daten gesendet werden sollen als Localhost oder 127.0.01 angegeben, verbleiben die Daten auf dem Raspberry Pi. Bei der Ad-resse handelt es sich um den Raspberry Pi selbst [vgl. loc].
+\\
+
+\textbf{\MussKriterien{M-DAR}}: Darstellung der umgerechneten Energieverbrauchswerte
+Dem Benutzer sollen die umgerechneten Energieverbrauchsdaten grafisch darge-stellt werden.
+\\
+
+\textbf{\MussKriterien{M-DAR}-10}: Darstellung der umgerechneten Energieverbrauchswerten
+Die grafische Darstellung der umgerechneten Energieverbrauchsdaten muss auf Webbasis geschehen.
+\\
+
+\textbf{\MussKriterien{M-DAR}}: Grafische Darstellung der umgerechneten 
+Energieverbrauchswerten
+Die grafische Darstellung der umgerechneten Energieverbrauchsdaten muss auf ei-nem Koordinatensystem geschehen.
+\\
+
+\textbf{\MussKriterien{M-DAR}}: Auswahl der Zähler für die Darstellung der Energieverbrauchswerte
+Der Benutzer soll für die grafische Darstellung die einzelnen Zähler auswählen kön-nen. Die Verbrauchswerte der ausgewählten Zähler werden dann auf einem Koordi-natensystem dargestellt.
+\\
+
+\textbf{\MussKriterien{M-DAR}-10}: Auswahl mehrerer Zähler für die Darstellung der
+Energieverbrauchswerte
+Der Benutzer soll für die grafische Darstellung mehrere Zähler gleichzeitig auswäh-len können. Die Verbrauchswerte der ausgewählten Zähler werden dann gleichzeitig grafisch auf einem Koordinatensystem dargestellt.
+\\
+
+\textbf{\MussKriterien{M-DAR}-20}: Auswahl aller Zähler für die Darstellung der Energieverbrauchswerte
+Der Benutzer soll für die grafische Darstellung alle Zähler auswählen können. Die Verbrauchswerte aller Zähler werden, auf einem Koordinatensystem dargestellt.
+\\
+
+\textbf{\MussKriterien{M-DAR}}: Auswahl des Zeitraumes für die Darstellung der 
+Energieverbrauchswerte
+Der Benutzer muss für die grafische Darstellung den Zeitraum auswählen können, in dem die 
+Verbrauchsdaten angezeigt werden sollen.
+\\
+
+\textbf{\MussKriterien{M-DAR}-10}: Auswahl des Startdatums für die Darstellung der
+Energieverbrauchswerte
+Der Benutzer muss für die grafische Darstellung das Startdatum für den Zeitraum
+Auswählen können, bei dem die Verbrauchswerte angezeigt werden sollen, die ab dem ausgewählten Startdatum abgespeichert wurden.
+\\
+
+\textbf{\MussKriterien{M-DAR}-20}: Auswahl des Enddatums für die Darstellung der
+Energieverbrauchswerte
+Der Benutzer muss für die grafische Darstellung das Enddatum für den Zeitraum
+auswählen können, bei dem die Verbrauchswerte angezeigt werden sollen, die bis
+zum dem ausgewählten Enddatum abgespeichert wurden.
+\\
+
+\textbf{\MussKriterien{M-DAR}-30}: Keine Auswahl des Datums für die Darstellung der
+Energieverbrauchswerte
+Ein bestimmtes Datum kann nicht ausgewählt werden, wenn für dieses Datum keine Energieverbrauchsdaten abgespeichert wurden.
+
+\section{Kann-Kriterien}
+\label{sec:KannKriterien}
+
+%Counter
+\newcounter{KannKriterien}
+\setcounter{KannKriterien}{0}
+\newcommand{\KannKriterien}[1]{%
+  \stepcounter{KannKriterien}%
+  #10\theKannKriterien0
+}
+\textbf{\KannKriterien{K-DAR}}Darstellung der aktuellen Energieverbrauchswerte\\
+Dem Benutzer kann die Möglichkeit gegeben werden, die Energieverbrauchswerte darstellen zu lassen, die aktuell verbraucht werden.
+\\
+
+\textbf{\KannKriterien{K-DAR}}Export der Verbrauchsdatendarstellung in Bilddatei\\
+Dem Benutzer kann die Möglichkeit gegeben werden, die von diesem betrachtete grafische Darstellung der Energieverbrauchsdaten in eine Bilddatei zu exportieren.
+
+
+
+\section{Technische Kriterien}
+\label{sec:TechnischeKriterien}
+
+%Counter
+\newcounter{TechnischeKriterien}
+\setcounter{TechnischeKriterien}{0}
+\newcommand{\TechnischeKriterien}[1]{%
+  \stepcounter{TechnischeKriterien}%
+  #10\theTechnischeKriterien0
+} 
+
+\textbf{\KannKriterien{MT}}: Den Aufsatz SD0 benutzen
+Für die Messung der S0-Impulse muss der Aufsatz SD0 von Busware benutzt wer-den.
+\\
+
+\textbf{\KannKriterien{MT}}: Datenempfang vom Aufsatz SD0 
+Die gemessenen S0-Impulse sollen vom Aufsatz SD0 von Busware über die serielle Schnittstelle empfangen werden.

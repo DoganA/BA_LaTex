@@ -1,0 +1,76 @@
+\definecolor{light-gray}{gray}{0.95}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%Seitenlayout definieren
+\geometry{a4paper,
+  left  = 25mm,
+  right = 20mm,
+  top   = 2.5cm,
+  bottom= 3cm,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Quellenformatierung für Tabellen und Grafiken
+\newcommand*{\quelle}[1]{%
+	\footnotesize(\uline{Quelle:} #1)
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Quellenformatierung für Tabellen und Grafiken
+\newcommand*{\tableRowHeader}[1]{%
+	\cellcolor{lightgray}\textbf{\underline{#1}}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fuß- und Kopfzeile bei Kapitelseiten:
+\renewcommand{\chapterpagestyle}{scrheadings}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Untersteichen der Chapter und subchapter
+%\RedeclareSectionCommands[font=\normalsize]{chapter,section,subsection,subsubsection}
+
+\renewcommand*{\chapterlinesformat}[3]{%
+  #2\uline{#3}%
+}
+\renewcommand*{\sectionlinesformat}[4]{%
+  \hskip#2#3\uline{#4}% 
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Tabellen und Abbildungs Verzeichniss formatierung: Es iwrd so formatier, dass
+%%% Prfäx Fettgedruckt und getrent zum Text mit einem : ist (Quelle: https://komascript.de/node/1911)
+\addtokomafont{captionlabel}{\bfseries} %nötig, für fettdruck
+\addtokomafont{captionlabel}{\uline} %nötig, für fettdruck
+
+%Grafik
+%\renewcaptionname{ngerman}{\figurename}{Abb.}
+\renewcommand*\listoflofentryname{\bfseries\figurename}
+\BeforeStartingTOC[lof]{\renewcommand*\autodot{:}}
+
+
+%Tabellen
+\renewcommand*\listoflotentryname{\bfseries\tablename}
+\BeforeStartingTOC[lot]{\renewcommand*\autodot{:}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Im Text Tab. und Abb. Captions werden Fett und unterstrichenn ausgegeben
+\makeatletter
+\renewcommand\caption@@make[2]{%
+  \centering\underline{\textbf{#1:}}~#2}
+\makeatother
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%Tabellenformatierung
+%Tabellenverzeichnis
+\lstset{
+    frame = LL, 										% draw a frame at the top and bottom of the code block
+    tabsize = 4, 									% tab space width
+    showstringspaces = false, 	% don't mark spaces in strings
+    numbers=left, 							% display line numbers on the left
+    commentstyle=\color{green}, % comment color
+    keywordstyle=\color{blue}, 	% keyword color
+    stringstyle=\color{red} 		% string color
+}
+\lstdefinelanguage{json}{
+    string=[s]{"}{"},
+    stringstyle=\color{blue},
+    comment=[l]{:},
+    commentstyle=\color{black},
+}

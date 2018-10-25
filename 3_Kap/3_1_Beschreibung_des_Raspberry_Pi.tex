@@ -1,0 +1,260 @@
+In diesem Kapitel werden die für diese Arbeit eingesetzte Hardware und die
+eingesetzten Schnittstellen UART und I$^{2}$C erläutert. Zusätzlich werden
+die Datenhalungs bzw. -darstellungsform beschrieben. Bei der Abschlussarbeit
+wird Raspberry Pi und die Erweiterung SD0 von Busware eingesetzt.
+
+Da für die Entwicklung der Softwarelösung der Aufsatz SD0 von Busware verwendet
+werden muss, trifft die Wahl des Einplatinencomputers auf den Raspberry Pi, weil
+der Aufsatz für den Raspberry Pi konzipiert worden ist \cite[vgl.][]{bsd0}.
+
+
+
+Als Platine für die Erweiterung wird der Raspberry Pi eingesetzt, da die
+Erweiterung SD0 dafür ausgerichtet ist. In diesem Kapitel wird entschieden
+welches Modell des Raspberry Pi ausgewählt wird und dieses beschrieben.
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+
+Aufgrund der Anzahl der Pins und der Anordnung der Komponenten auf dem Board kann zwischen den
+Raspberry Pi Modellen A und B ausgewählt werden, da der Aufsatz SD0 an sich 26 Pins hat. Bei
+den anderen Raspberry Pi Modellen, also beim Raspberry Pi A+, B+ und Raspberry Pi 2 Modell B
+würde es beim Aufsetzen auf die Raspberry Pi Modellen mit mehr als 26 Pins die anderen Pins
+umbiegen bzw. zerstören. Zudem würde der \emph{Display Connection Port} (DSI), das Aufstecken des Aufsatzes
+SD0 behindern. Der Aufsatz hat eine entsprechende Einbuchtung für den DSI Port bei Raspberry Pi A und B.
+
+Da der Raspberry Pi Modell B, im Gegensatz zum Modell A einen höheren Arbeitsspeicher und einen
+Netzwerkanschluss hat, wird Modell B eingesetzt. Der Netzwerkanschluss ist für die Darstellung
+des Energieverbrauchs wichtig, weil die Daten entweder für die Darstellung an einen Server gesendet
+oder auf dem Raspberry Pi präsentiert werden.
+
+In diesem Kapitel wird nicht nur der SoC \textit{BCM2835}, welcher den Kern des Raspberry Pis bildet erläutert,
+sondern auch die Komponenten die für den Einsatz der zu entwickelnden Softwarelösung benötigt werden.
+Dabei handelt es sich vor al-lem um die Ein- und Ausgänge, insbesondere den GPIO Pins mit den benutzten
+Funktionen. Der Grafikprozessor, mit seinen Ausgängen wird nur am Rande erwähnt.
+
+
+\subsection{System on a Chip (SoC)}
+\label{sec:SystemOnAChipSoC}
+
+Der Raspberry Pi Model B basiert auf dem \textit{BCM2835} von Broadcom, dessen Kern die
+CPU \textit{ARM1176JZF-S} ist. Die CPU gehört der ARM11 Generation an, welche auf der Architektur ARMv6
+mit 700 MHz basiert \citealp[vgl.][S.359]{Kof2015} und \citealp[S.19]{Upt2014}.
+Sie hat eine Adressbreite von 32 Bit \cite[vgl.][S. 359]{Kof2015}. Beim BCM2835
+handelt es sich um einen SoC, also um einen System on a Chip. Dies bedeutet, dass
+es nicht nur die CPU sondern auch andere Teilsysteme beinhaltet, so dass diese nicht
+einzeln auf dem Raspberry Pi verbaut sind. Neben dem CPU beinhaltet es den Grafikprozessor (GPU)
+und den Arbeitsspeicher (SDRAM) in der Größe von 512 MB [\citealp[vgl.][S.359]{Kof2015} und \citealp[S. 56 - S. 57]{Dem2013}]
+sowie die Verbindungen zu den GPIO Pins. Die CPU besitzt zudem separate Cache-Speicher für Daten und Befehle \cite[vgl.][S. 61]{Dem2013}.
+Beim Arbeitsspeicher handelt es sich um einen Internen Speicher,sodass die CPU keine
+externen Datenverbindungen besitzt, da keine externen Arbeitsspeicher angeschlossen werden \cite[vgl.][S. 63]{Dem2013}.
+
+Beim Grafikprozessor handelt es sich um einen \emph{VideoCore IV} welches den H.264 Standard mit
+einer 40 MBits/s unterstützt, die Videos mit einer Datenkompression von H.263 mit einer Rate
+von bis zu 40 MBits/s darstellen kann. Der Grafikspeicher soll automatisch ein Teil des Arbeitsspeichers
+mitbenutzt werden \cite[vgl.][S. 359]{Kof2015}. Die Darstellung kann über drei verschiedene Ausgänge
+erfolgen. Bei den Ausgängen handelt es sich um HDMI, Composite Video und DSI \cite[vgl.][S. 68]{Dem2013}.
+
+Die mit dem Grafikprozessor verbundenen Comosite-Video und HDMI Anschlüsse können
+direkt eingesetzt werden. Der Display Serial Interface benötigt spezielle Hardware \cite[vgl.][S. 22]{Upt2014}
+wie einem Folienkabel \cite[vgl.][S. 92]{Dem2013}.
+
+Das DSI ist eine serielle Steckerleiste mit 15 Pins, an dem ein Display angeschlossen
+und der RPi autonom benutzt werden kann, ohne dass es an einen Monitor oder Display,
+wie sie von normalen Computern her bekannt ist, angeschlossen werden muss [\cites[vgl.][S.24]{Upt2014} und [S.72]{Dem2013}].
+Die Klemmhalterung dient der Aufnahme eines Folienkabels.
+
+In dieser Arbeit wird weder der Grafikprozessor noch die Anschlüsse des Grafikprozessors verwendet.
+Lediglich der Jumper des DSI muss abmontiert werden, da sonst der Aufsatz SD0 von Busware nicht richtig
+auf die GPIO-Leiste des Raspberry Pis aufgesteckt werden kann.
+
+
+\subsection{Stromversorgung}
+Der Raspberry Pi Modell B sollte mit einem Strom von mindestens 700 mA (Milliampere) und einer
+Spannung von 5 Volt versorgt werden. Eine Polyfuse verhindert eine Überversorgung von über einem Ampere,
+also 1000 Milliampere \cite[vgl.][Kapitel 3.8]{Dem2013}.
+
+
+\subsection{Datenspeicher des Raspberry Pis}
+\label{sec:DatenspeicherdesRaspberryPis}
+
+In diesem Unterkapitel wird nicht der Arbeitsspeicher behandelt, sondern der Daten- und Programmspeicher.
+Da der Raspberry Pi keinen Speicher bzw. keine Festplatte besitzt, benötigt er eine SD-Karte \cite[vgl.][27]{Upt2014}.
+Auf der SD-Karte werden nicht nur Programme und Daten abgespeichert; darauf läuft auch das Betriebs-system.
+
+Es können drei verschiedene SD-Karten-Standards am Raspberry Pi Model B an-geschlossen werden, da diese die gleichen
+Abmessungen besitzen. Anzumerken ist, dass der Schreibschutz an den Karten vom Raspberry Pi nicht ausgewertet wird.
+An den SD-Karten Slot können SD-Karten mit den Abmessungen 32 mm x 24mm x 2,4mm angeschlossen werden. Bei den
+einsetzbaren SD-Karten handelt es sich um folgende Karten \cite[vgl.][64]{Dem2013}:
+
+\begin{description}
+	\item[SD-Karte] mit einer Kapazität von 8 MB bis 2 GB
+	\item[SDHC (SD High Capacity) Card] mit einer Kapazität von 4 GB bis 32 GB und
+	\item[SDXC (SD eXtended Capacity) Card] mit einer Kapazität von 64 GB bis 2 TB
+\end{description}
+
+Die SDHC-Karte lässt sich wiederum in verschiedene Klassen unterteilen. Diese
+Klassen sind Abstufungen der Mindestübertragungsrate der Karte. Diese lassen sich folgendermaßen aufteilen \cite[vgl.][66]{Dem2013}:
+
+\begin{description}
+	\item[Class 2] mit 2 MByte/s Mindestübertragungsrate
+	\item[Class 4] mit 4 MByte/s Mindestübertragungsrate
+	\item[Class 6] mit 6 MByte/s Mindestübertragungsrate
+	\item[Class 8] mit 8 MByte/s Mindestübertragungsrate
+\end{description}
+
+Mit den unteren Übertragungsraten, also mit Class 2 und 4 soll es kaum Probleme geben.
+Mit den höherklassigen SD-Karten, also mit Class 6 und 8, kann es jedoch Kompatibilitätsprobleme
+geben. Die höheren Klassen werden bei der Wiedergabe von ruckelfreien Videowiedergaben
+bevorzugt \cite[vgl.][S. S. 65 bis S. 66]{Dem2013}. Für das Betriebssystem des Raspberry Pi
+werden mindestens 4 GB gebraucht \cite[vgl.][S. 27]{Upt2014}. Es wird jedoch 8 GB empfohlen \cite[vgl.][S. 27]{Upt2014}.
+
+Das SD-Karten Slot, das sich unterhalb des Raspberry Pi befindet, ist direkt mit dem SoC BMC2835
+verbunden. Der eigentliche Card-Controller befindet sich auf der SD-Karte. Neben der Masseleitung
+des Blechslots (MTG1 und MTG2) und den Masseleitung für die Karte selbst (Vss1 und Vss2) wird der
+Slot bzw. die Karte über die Leitung Vdd mit Spannung versorgt. Die Datenübertragung erfolgt taktgesteuert.
+Die Karte wird über die Leitung CLK mit dem Takt vom BCM2835 versorgt. Die Datenübertragung an
+sich findet über die Datenleitungen DAT0, DAT1, DAT2, DAT3 statt. Die Leitung DAT3 kann gleichzeitig
+zur Kartenerkennung (CD: Card Detection) benutzt werden. Ob auf die Karte geschrieben oder von der
+Karte gelesen werden soll, wird von der Leitung CMD bestimmt \cite[vgl.][S. 66]{Dem2013}.
+
+
+\subsection{Betriebssystem}
+\label{sec:Betriebssystem}
+Für den Raspberry Pi existieren unterschiedliche Betriebssysteme, die für verschiedene
+Einsatzzwecke konzipiert wurden. Bei den meisten handelt es sich um Betriebssysteme von Drittanbietern \cite[vgl.][]{RpiD}.
+
+Neben Betriebssystemen, wie OpenELEC (Open Embedded Linux Entertainment Centre) oder OSMC (Open Source Media Centre) \cite[vgl.][]{RpiD}. die als Mediacenter, also für das Streaming von Medien, wie Musik und Filmen genutzt werden können, \cite[vgl.][S. 55]{Kof2015} gibt es Betriebssysteme, die auf verschiedenen Linux-Distributionen basieren. Dabei handelt es sich beispielsweise um Raspbian, RISC OS, Pidora oder ArchLinux ARM. Das Betriebssystem wird vor allem im Hinblick auf die Unterstützung des Raspberry Pi und evtl. späterer Änderungen und Erweiterungen. des im Rahmen dieser Arbeit erstellten Softwarelösung ausgewählt.
+
+\textbf{Pidora}, ist ein auf der Fedora-Distribution basierendes Betriebssystem \cite[vgl.][S. 54]{Kof2015}. Pidora soll langsam arbeiten und im Betrieb sollen merkliche Fehler auftauchen\cite[vgl.][S. 96]{Dem2013}.
+
+Beim \textbf{ArchLinux} handelt es sich um einen an Einplatinencomputer, wie BeagelBone und Raspberry Pi optimierte Arch-Distribution \cite[vgl.][S. 55]{Kof2015}. Es soll jedoch eine geringe Anzahl an Softwarepaketen anbieten, was nicht optimal für spätere Erweiterungen der entwickelten Software sein kann.
+
+\textbf{RiscOS} ist ein nicht auf Linux basierendes, im Jahre 1987 von Acorn entwickeltes Betriebssystem. Für dieses Betriebssystem soll es wenig Open-Source-Software geben \cite[vgl.][S. 96]{Dem2013}.
+
+Beim \textbf{\underline{Raspbian}} handelt es sich um ein vom Raspberry Foundation empfohlenes Betriebssystem \cite[vgl.][S. 48]{Upt2014}.Bei dieser Arbeit wird Raspbian eingesetzt. Das hat
+verschiedene Gründe. Raspian soll einerseits ein stabiles, auf Debian basierendes und andererseits speziell auf den Broadcom BCM2835 angepasstes Betriebssystem sein,
+\cite[vgl.][S. 95]{Dem2013} das auf ein direktes Zusammenspiel mit der Hardware des Raspberry Pi ausgerichtet ist. \cite{EPB1} Es unterstützt beispielsweise den Floating Point
+Unit \cite[vgl.][S. 95]{Dem2013}. Auch in Hinblick auf den oben genannten Punkt der Erweiterung der zu entwickelnden Software, erfüllt es das Kriterium. Mit Raspbian werden Softwarepakete mitgeliefert, die entweder nur ihm zur Verfügung stehen oder in anderen Distributionen kompiliert werden müssen, falls diese dort zum Einsatz kommen sollen \cite[vgl.][S. 55]{Kof2015}.
+
+
+\subsection{I/O - Anschlüsse}
+\label{sec:IOAnschlüsse}
+
+Der Raspberry Pi benutzt den Micro USB-Anschluss und den SD-Karten-Slot zum Betrieb. Auf der SD-Karte läuft, wie im Kapitel "`Datenspeicher"' erwähnt, das Be-triebssystem. Über den Micro USB-Anschluss wird der Raspberry Pi mit Strom ver-sorgt. Darüber hinaus kann es auch mit einem Computer verbunden werden. In die-sem Fall wird es über den Computer mit Strom versorgt. Über den SD-Karten Slot wird eine SD-Karte angeschlossen, die das Betriebssystem für den Raspberry Pi be-inhaltet. Die SD-Karte wird nicht nur für das Betriebssystem, sondern auch als Spei-cher benutzt.
+
+Neben den Anschlüssen, die für den Betrieb gebraucht werden, besitzt der Raspberry Pi Model B jeweils einen Audio- und Video Composit-Ausgang und zwei USB-Anschlüsse, über die beispielsweise Tastatur oder Maus angeschlossen wer-den können. Daneben besitzt er einen HDMI-Anschluss für eine hochauflösende, verlustfreie Video- und Audiosignalübertragung [vgl. ITW]. Wie in der Tabelle 3.2.1 im Kapitel 3.2 dargestellt, besitzt der Raspberry Pi Model B auch einen Ethernet -Anschluss, für einen Anschluss an ein Netzwerk.
+
+Der Raspberry Pi Model B hat neben den fünf Status LEDs und dem Ethernet An-schluss noch die Verbindungen, die von S1 bis S7 und P1 bis P6 bezeichnet werden. In den folgenden beiden Tabellen werden die Schnittstellen erläutert und mit konkre-ten Anschlüssen dargestellt.
+
+\begin{table}[!h]
+	\centering
+	\caption{Schnittstellen des Raspberry}
+	\label{tab:SchnittstellenDesRaspberry}
+		\begin{tabular}{|c|l|}
+		\hline
+		\tableRowHeader{Anschluss}  & \tableRowHeader{Beschreibung}  					     			\\ \hline
+		\multirow{2}{*}{S1}  & Micro USB-Anschluss			   			\\
+		                     &  (für die Stromversorgung) 	 		\\ \hline
+	  S2                   & DSI-Anschluss  									\\ \hline
+	  S3                   & HDMI Anschluss, Typ A  					\\ \hline
+		S4                   & Composite Video Anschluss (RCA)  \\ \hline
+		S5                   & CSI Anschluss  									\\ \hline
+		\multirow{2}{*}{S6}  & Audio-Ausgang;										\\
+									& 3,5 Klinker Anschluss										\\ \hline
+		\multirow{2}{*}{S7}  & SD Karten-Slot										\\
+												 & (befindet sich unterhalb des RPi)\\ \hline
+								
+		\end{tabular}
+\end{table}
+
+Die Folgende Tabelle Listet die verfügbaren GPIO Pins des Raspberry Pis auf:\\
+
+
+\begin{table}[!h] 
+	\centering
+	\caption{GPIO Anschlüsse des Raspberry}
+	\label{tab:GPIOAnschlüssedesRaspberry}
+		\begin{tabular}{|c|l|}
+		\hline
+		\textbf{Anschluss}            & \textbf{Beschreibung}  \\ \hline
+		P1       					   & GPIO Steckerleiste; 2x 13 Pins\\ \hline
+	  \multirow{2}{*}{P2}  & JTAG für GPU; Für 8 Pins  \\
+                         &  (keine angeschlossenen Pins) \\ \hline
+	  \multirow{2}{*}{P3}  & JTAG für LAN9512; Für 7 Pins  \\
+                         & (keine angeschlossenen Pins)  \\ \hline
+		P4                   & RJ45 Ethernet Anschluss  \\ \hline
+		\multirow{2}{*}{P5}  & GPIO Erweiterungspins;  \\
+                         & 8 Anschlüsse ohne Pins  \\ \hline
+		\multirow{2}{*}{P6}  & Reset-Button-Anschluss; \\
+												 & (keine angeschlossenen Pins)  \\ \hline
+		\end{tabular}
+\end{table}
+
+
+In dieser Arbeit werden die Anschlüsse S1, S7, P1 und P4 verwendet.
+
+\subsection{GPIO Anschlüsse}
+\label{sec:GPIOAnschlüsse}
+
+Bei einer General Purpose Input/Output (kurz GPIO) Schnittstelle handelt es sich, ganz allgemein betrachtet, um eine Schnittstelle die nichts über die einzelnen Pins, noch über deren elektrische Daten oder die Art und Weise der Programmierung aussagt. Erst durch den Einsatz auf einer bestimmten Platine und deren Bestückung gewinnt die GPIO an Bedeutung [vgl. Dem2013 S. 74 bis S.75]. Beim GPIO des Raspberry Pi handelt es sich um eine Schnittstelle, über die der Raspberry Pi mit Schaltungen, Platinen usw. erweitert werden kann.
+Wie aus der Tabelle 3.2 zu entnehmen ist, existieren neben der eigentlichen GPIO-Schnittstelle mit der Bezeichnung P1 noch weitere Schnittstellen, die in unterschiedlichen Bereichen eingesetzt werden.
+
+Bei den Schnittstellen mit der Bezeichnung P2 und P3 handelt es sich um JTAG Schnittstellen (Joint Test Action Group). Diese werden bei der Produktion des Raspberry Pi benutzt, um die Funktionalität des Raspberry Pi zu testen [vgl. Kof2015 S. 364 bis S.365]. Die Schnittstelle mit der P2-Bezeichnung wird für den GPU also für die Grafikeinheit benutzt. Mit der P3-Schnittstelle wird die Funktionalität des LAN2512-Chips getestet. Der LAN2512 beinhaltet den USB- Hub, mit 2 USB2.0-Ports und den LAN Controller.
+ 
+Die GPIO Schnittstelle mit der Bezeichnung P4 ist mit der RJ45 bzw. Ethernet Buchse und dem LAN-Controller des LAN9512 verbunden. Daher wird diese Schnittstelle beim Raspberry Pi Modell B für Ethernet Anschluss verwendet und ist beim Modell B standardmäßig mit dem jeweiligen Port belegt.\cite[vgl.][S.366]{Kof2015}
+
+Die GPIO Schnittstelle mit der Bezeichnung P5 besitzt acht Kontakte, die nicht mit Pins bestückt sind. Diese GPIO Schnittstelle steht erst ab der 2 Revision zur Verfügung. Über
+die ersten beiden Kontakte werden Spannungen zur Verfügung gestellt. Beim ersten Kontakt sind 5 Volt und über den zweiten Kontakt 3,3 Volt verfügbar. Die letzten beiden Kontakte
+bilden die Masse. Die restlichen vier Kontakte der Schnittstelle bieten zwei Funktionen an: die Die Primärfunktion bildet das Bussystem I$^{2}$C über die Kontakte 3 und 4. Dieser
+ist der zweite I$^{2}$C Kanal, auf dem Raspberry Pi. Die zweite bzw. alternative Funktion bilden die Kontakte 5 und 6. Über diese ist der I$^{2}$S Bus benutzbar. Dieses Bussystem
+überträgt Audiosignale [vgl. Kof2015 S.365].
+
+Die Schnittstelle P6 bietet die Möglichkeit eines Hardware-Rests an. Darüber wird also die CPU neugestartet [vgl. Kof2015 S.365]. Dazu müssen die beiden Kontakte miteinander kurzgeschlossen werden [vgl. Kof2015 S.1032].
+
+Die GPIO-Schnittstelle mit der Bezeichnung P1 stellt die Basis für weitergehende Projekte dar. Durch die GPIO-Schnittstelle kann der Raspberry Pi mit Schaltungen, Platinen usw. um Funktionalitäten erweitert werden. In diesem Kapitel wird diese GPIO- Schnittstelle mit der Anschlussbezeichnung P1 näher beschrieben, da diese Schnittstelle nicht nur für die eigentlichen Erweiterungen, sondern auch in dieser Arbeit für die Erweiterung SD0 von Busware verwendet wird.
+Die Schnittstelle selbst arbeitet intern mit einer Spannung von 3,3 Volt. Die Zufuhr von höheren Spannungen als 3,3 Volt oder der Kurzschluss der 5 Volt Pins, mit den anderen GPIO-Pins könnte den Raspberry Pi zerstören [vgl. Upt2014 S. 222].
+
+\begin{figure}[htbp] 
+  \caption{Schaltung des GPIO Steckerleiste von Raspberry Pi Model B}
+  \label{fig:Schaltung des GPIO Steckerleiste von Raspberry Pi Model B}
+	\centering
+     \includegraphics[width=0.7\textwidth]{Bilder/Schaltung_GPIO.png}
+\end{figure}
+
+Beim Raspberry Pi erfüllt jede GPIO Pin eine bestimmte Aufgabe. Einige Pins haben Doppelfunktionen. Alle Signale werden vom BCM2835 bereitgestellt. Die GPIO-Schnittstelle des Raspberry Pi Modell B, welches sic h in der Abbildung 3.1auf der oberen linken Ecke des Raspberry Pis befindet, besteht aus zwei Reihen mit jeweils 13 Pins.
+
+
+\subsection{LAN9512}
+\label{sec:LAN9512}
+Das in dieser Arbeit eingesetzte Raspberry Pi Model B hat einen LAN9512. Der LAN9512 ist neben den SoC BCM2835 der zweite Chip auf dem Raspberry Pi Model B. Es beinhaltet verschiedene Einheiten, wie einen LAN-Controller und den USB Hub.
+
+\begin{figure}[htbp]
+	\caption{Prinzipschaltbild des LAN9512}
+	\label{fig:LAN9512}
+	\centering
+		\includegraphics[width=0.70\textwidth]{Bilder/LAN9512.png}
+\end{figure}
+
+Anzumerken ist, dass der SoC BCM2835 als USB-Controller und der LAN9512 nur als USB-Hub mit 2 Ports dient [vgl. LAN9512, S. 6 und Dem2013, S. 81].
+Der USB-Anschluss wird in dieser Arbeit nicht verwendet. Aber jedoch der Ethernet-anschluss.
+
+
+\subsection{Ethernet}
+\label{sec:Ethernet}
+
+Der im LAN9512 eingesetzte Ethernet-Controller unterstützt die Ethernet-Standards
+10Base-T mit 10Megabit/s, die im IEEE802.3 und 100Base-TX mit 100Megabit/s, welches
+im IEEE 802.3u spezifiziert sind [vgl. LAN9512 S.7 und Dem2013 S.84]. Zusätzlich
+besteht die Funktion "`Wake on LAN"'. Dies bedeutet, dass der Raspberry Pi über das
+angeschlossene Netzwerk aktiviert werden kann, wenn sich dieser im Ruhe Modus befindet.
+100Base-TX unterstützt die automatische Detektion (Auto Negotiation) der Betriebsart.
+Es erkennt also die Verdrahtung des Ethernet-Kabels, das an der RJ45-Buchse angesteckt ist.
+Es wird auch Full-Dublex unterstützt, es kann somit gleichzeitig ge-sendet und empfangen werden [vgl. Dem2013 S.84]. 
+\begin{figure}[htbp]
+	\caption{Ethernet-Schaltung des Raspberry Pi Model B}
+	\label{fig:RJ45_Anschluss_mit_LAN2512}
+	\centering
+		\includegraphics[width=0.80\textwidth]{Bilder/RJ45_Anschluss_mit_LAN2512.png}
+\end{figure}

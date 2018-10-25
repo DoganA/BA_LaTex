@@ -1,0 +1,99 @@
+Bei der Datenhaltung, also der Datenspeicherung, gibt es verschiedene Möglichkeiten:
+die Daten können beispielsweise als CSV, also als Comma Separated Values,
+abgespeichert werden. Es gibt jedoch auch die Möglichkeiten die Daten in
+JSON oder aber auch in SQL abzulegen. Die Daten in SQL abzuspeichern lohnt sich
+erst, wenn die Daten auch lokal auf dem Raspberry Pi weiterverarbeitet werden sollen.
+Dabei muss auch bedacht werden, dass ein SQL-Server benötigt wird. Dies
+würde dazu führen, dass durch den SQL-Server mehr Ressourcen verwenden würden.
+Das heißt ein SQL-Server würde nicht nur Speicher auf der SD-Karte einnehmen,
+sondern auch, wenn der Server läuft, den Arbeitsspeicher und die CPU beanspruchen.
+
+Beim JSON ist bei der Programmierung des Quellcodes, die auf dem Raspberry Pi
+läuft, nur ein Libary nötig, der die Daten in eine. JSON-Datei schreibt. JSON wird
+meist im Web Bereich eingesetzt.
+
+
+\subsection{Comma Separated Values (CSV)}
+\label{sec:CommaSeparatedValuesCSV}
+emeinen
+Standard oder bestimmte Spezifikation, sondern es kann in unterschiedlichen
+Spezifikationen eingesetzt werden. Das CSV-Format kann dann eingesetzt,
+wenn die abgespeicherten Daten unabhängig von der Technologie eingesetzt werden
+sollen. Also wenn die Daten beispielsweise in einem Tabellenprogramm dargestellt
+und in einem Quellcode bearbeitet werden sollen \cite[vgl.]{RFC4180}.
+
+Die Daten können entweder durch einfache Kommata voneinander getrennt in der
+.csv Datei abgelegt werden, die Werte an sich können zusätzlich in Anführungsstriche
+bzw -zeichen gesetzt werden. Genauso könnten die einzelnen Daten mit Semikolon
+voneinander getrennt abgespeichert werden \cite[vgl.]{RFC4180}. Zu beachten ist
+jedoch, dass bei Kommazahlen im deutschen ein Komma benutzt wird und im englischsprachigen
+Raum ein Punkt. Dies könnte evtl. zu Problemen beim Lesen bzw.
+Parsen der Datei im Quellcode führen.
+
+
+\subsection{JavaScript Object Notation (JSON)}
+\label{sec:JavaScriptObjectNotationJSON}
+JavaScript Object Notation, kurz JSON, ist ein Datenaustauschformat. Dabei handelt
+es sich um ein von Programmiersprachen unabhängiges Textformat. Daten können
+also programmiersprachenunabhängig ausgetauscht werden. JSON folgt jedoch
+der JavaScript Notation. Dabei handelt es sich bei JSON um eine Untermenge der
+Skriptsprache JavaScript \cite[vgl.]{ecma2013}.
+
+Das Datenaustauschformat basiert dabei auf zwei Strukturen \cite[vgl.]{ecma2013}:
+\begin{description}
+	\item \textbf{Name-Wert-Paare}\\	
+	Dabei ist jedem Namen bzw. Bezeichnung mindestens ein Wert zugewiesen.
+	
+	\item \textbf{Geordnete Liste von Werten}\\
+Neben den beiden Strukturen gibt es in JSON, wie auch in Programmiersprachen, Typen. Die Typen beziehen sich auf die Werte. Die folgende Auflistung mit entsprechenden Zeichen
+[vgl ecma2013]:
+
+	\item \textbf{Objekte}\\
+\textit{Objekte} beinhaltet eine ungeordnete Menge an Name-Werte-Paare. Es beginnt mit einer öffnenden geschweiften Klammer "`{"` und einer schließenden geschweiften Klammer "`}"'. Die Name-Werte-Paare sind mit einem Doppelpunkt getrennt [vgl. ecma2013]:\\
+\item \textit{Name:Wert}\\
+Jedes Paar ist wiederum zueinander mit Kommata (,) voneinander getrennt [vgl. ecma2013].
+
+	\item \textbf{Arrays}\\
+Ein Array beinhaltet eine geordnete Liste von Werten, die einem Namen zugewiesen werden. Arrays beginnen mit einer [ (öffnenden eckigen Klammer) und enden mit einer ] (schließenden eckigen Klammer). Die Werte an sich sind mit , (Komma) zu einander getrennt [vgl ecma2013].
+
+\item \textbf{Werte}\\
+Werte werden durch Objekte, Arrays, Zeichenketten (Strings), Zahlen, den Wahrheitswerten \textsl{true} und false oder Null gebildet [vgl ecma2013].
+\item \textbf{Zeichenketten}\\
+Strings, also Zeichenketten, sind Unicode Zeichen [vgl ecma2013].
+
+\item \textbf{Nummern}\\
+Bei den Zahlen in JSON handelt es sich um Dezimalzahlen. Den Zahlen kann ein -
+(Minus) vorangestellt werden. Gefolgt von entweder einem 0 (Null) oder einer beliebigen Zahl von 1 bis 9 in beliebiger Weiderholung. Gleitkommerzahlen werden mit einem Punkt getrennt [vgl ecma2013]. \cite{ecma2013}
+\end{description}
+Im Folgenden ist ein beispielhafter Aufbau einer JSON-Datei dargestellt:
+
+\newpage
+\begin{lstlisting}[language=JSON, caption={Beispielhafter Aufbau einer JSON-Datei}]
+{
+	"`books"': [
+		"`book"': {
+			"`language"':"'Java"',
+			"`edition"':"'second"',
+			"`price"': 10,
+			"`author"': ["`Hans"', "`Peter"', "`Müller"']
+		},
+
+		"`book"': {
+			"`language"':"'C++"',
+			"`lastName"':"'fifth"'
+			"`price"': 11.12,
+			"`author"': ["`Stroustroup"']
+		},
+
+		"`book"': {
+			"`language"':"'C"',
+			"`lastName"':"'third"'
+			"`price"': 8,
+			"`author"': ["`Georg"', "`Petrus"']
+		}
+	]
+}
+\end{lstlisting}
+\begin{center}
+\quelle{\cite[vgl.][]{asd}}
+\end{center}
