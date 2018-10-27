@@ -38,13 +38,12 @@
 %%% Tabellen und Abbildungs Verzeichniss formatierung: Es iwrd so formatier, dass
 %%% Prfäx Fettgedruckt und getrent zum Text mit einem : ist (Quelle: https://komascript.de/node/1911)
 \addtokomafont{captionlabel}{\bfseries} %nötig, für fettdruck
-\addtokomafont{captionlabel}{\uline} %nötig, für fettdruck
+\addtokomafont{captionlabel}{\uline} %nötig, für unterstrich
 
 %Grafik
-%\renewcaptionname{ngerman}{\figurename}{Abb.}
 \renewcommand*\listoflofentryname{\bfseries\figurename}
+	%\renewcaptionname{ngerman}{\figurename}{Abb.}
 \BeforeStartingTOC[lof]{\renewcommand*\autodot{:}}
-
 
 %Tabellen
 \renewcommand*\listoflotentryname{\bfseries\tablename}
