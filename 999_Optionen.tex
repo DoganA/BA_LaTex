@@ -56,6 +56,50 @@
   \centering\underline{\textbf{#1:}}~#2}
 \makeatother
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%Bibliographie jede 2. Eintrag Hintergrundfarbe.
+\newcounter{zebrabibentry}
+\newcounter{zebrabibbibenv}
+
+\defbibenvironment{bibliography}
+  {\list
+     {\stepcounter{zebrabibentry}
+      \zebrabibstart{zebrabib-%
+        \the\value{zebrabibbibenv}-%
+        \the\value{zebrabibentry}}%
+      \printtext[labelnumberwidth]{%
+        \printfield{labelprefix}%
+        \printfield{labelnumber}}}
+     {\stepcounter{zebrabibbibenv}%
+      \setcounter{zebrabibentry}{0}%
+      \setlength{\labelwidth}{\labelnumberwidth}%
+      \setlength{\leftmargin}{\labelwidth}%
+      \setlength{\labelsep}{\biblabelsep}%
+      \addtolength{\leftmargin}{\labelsep}%
+      \setlength{\itemsep}{\bibitemsep}%
+      \setlength{\parsep}{\bibparsep}}%
+      \renewcommand*{\makelabel}[1]{\hss##1}}
+  {\endlist}
+  {\item}
+
+\newcommand*{\zebrabibstart}[2][]{%
+  \tikz[remember picture,overlay]
+  \draw[line width=1pt,rectangle,
+    draw=\ifodd\value{zebrabibentry}white\else blue!20\fi,
+    fill=\ifodd\value{zebrabibentry}white\else blue!10\fi,]
+    let \p1=(pic cs:#2) in
+    ({0pt,10pt}) node [anchor=base] (#2){} rectangle  (\columnwidth+2pt,\y1-\itemsep)
+    ;
+}
+
+\newcommand\zebrabibend[2][]{%
+  \tikz[remember picture with id=#2] #1;}
+
+\renewbibmacro{finentry}{%
+  \finentry
+  \zebrabibend{zebrabib-%
+    \the\value{zebrabibbibenv}-%
+    \the\value{zebrabibentry}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%Tabellenformatierung
 %Tabellenverzeichnis
 \lstset{

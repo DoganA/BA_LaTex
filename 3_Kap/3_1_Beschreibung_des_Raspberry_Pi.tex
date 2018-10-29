@@ -17,6 +17,31 @@ welches Modell des Raspberry Pi ausgewählt wird und dieses beschrieben.
 % Please add the following required packages to your document preamble:
 % \usepackage{multirow}
 
+\begin{table}
+    \caption{Eigenschaften des Raspberry Pi}
+    \label{tab:EigenschaftendesRaspberryPitabelle}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+    \hline
+    \multicolumn{2}{|c|}{\textbf{\uline{Eigenschaften}}}            &         \textbf{\uline{Modell A}}  & \textbf{\uline{Modell A+}} &         \textbf{\uline{Modell B}} & \textbf{\uline{Modell B+}} & \textbf{\uline{Raspberry Pi 2 Model B}} \\ \hline
+\multirow{3}{*}{Gesamtgrösse (in mm)} & Länge  & 93        & 70,4        & \multicolumn{3}{c|}{93}                         \\ \cline{2-10} 
+                                                                            & Breite & 63,5      & 57,2        & \multicolumn{3}{c|}{63,5}                       \\ \cline{2-10} 
+                                                                            & Höhe   & 17        & 12          & \multicolumn{3}{c|}{20}                         \\ \hline
+\multicolumn{2}{|l|}{SoC}                      & \multicolumn{4}{c|}{Broadcom BCM2835}         & Broadcom BCM2836       \\ \hline
+\multirow{4}{*}{CPU}                  & Typ    & \multicolumn{4}{c|}{ARM1176JZF-S}             & ARM Cortex-A7          \\ \cline{2-10} 
+                                                                            & Kern   & \multicolumn{4}{c|}{1}                        & 4                      \\ \cline{2-10} 
+                                                                            & Takt   & \multicolumn{4}{c|}{700 MHz}                  & 900 MHz                \\ \cline{2-10} 
+                                                                            & Architektur & \multicolumn{4}{c|}{ARMv6}               & ARMv7                  \\ \hline
+\multicolumn{2}{|l|}{Arbeitsspeicher}          & 256 MB & \multicolumn{4}{c|}{512 MB}          & 1024 MB                \\ \hline
+\multicolumn{2}{|l|}{Speicher}    &             & Kartenleser für \\Full SD & Micro SD & Kartenleser für Full SD & Micro SD  & Micro SD \\ \hline
+\multicolumn{2}{|l|}{Anzahl der USB 2.0 Anschlüsse} & \multicolumn{2}{c|}{1}        & 2     & \multicolumn{2}{l|}{4}       \\ \hline
+\multicolumn{2}{|l|}{Ethernet}                      & \multicolumn{2}{c|}{-}& \multicolumn{3}{c|}{10 und 100 MBit}         \\ \hline
+\multicolumn{2}{|l|}{Pin}                      & 26        & 40           & 26                     & \multicolumn{2}{c|}{40}\\ \hline
+\multicolumn{2}{|l|}{GPIO-Pins}                     & 17                                           & \multicolumn{2}{c|}{26}        & \multicolumn{2}{c|}{17}                                    & \multicolumn{3}{c|}{26}                             \\ \hline
+\multicolumn{2}{|l|}{Weitere Schnittstellen}& \multicolumn{5}{c|}{1 x CSI, 1 x DSI, 1 x I$^{2}$C, 1 x I$^{2}$S}                       \\ \hline
+\multicolumn{2}{|l|}{Stromversorgung}               & \multicolumn{5}   {c|}{5,0 V; über einen Micro-USB-Anschluss (Micro-USB-B)}\\ \hline
+\end{tabular}
+\end{table}
+
 Aufgrund der Anzahl der Pins und der Anordnung der Komponenten auf dem Board kann zwischen den
 Raspberry Pi Modellen A und B ausgewählt werden, da der Aufsatz SD0 an sich 26 Pins hat. Bei
 den anderen Raspberry Pi Modellen, also beim Raspberry Pi A+, B+ und Raspberry Pi 2 Modell B
@@ -98,10 +123,10 @@ Die SDHC-Karte lässt sich wiederum in verschiedene Klassen unterteilen. Diese
 Klassen sind Abstufungen der Mindestübertragungsrate der Karte. Diese lassen sich folgendermaßen aufteilen \cite[vgl.][66]{Dem2013}:
 
 \begin{description}
-	\item[Class 2] mit 2 MByte/s Mindestübertragungsrate
-	\item[Class 4] mit 4 MByte/s Mindestübertragungsrate
-	\item[Class 6] mit 6 MByte/s Mindestübertragungsrate
-	\item[Class 8] mit 8 MByte/s Mindestübertragungsrate
+		\item[Class 2] mit 2 MByte/s Mindestübertragungsrate
+		\item[Class 4] mit 4 MByte/s Mindestübertragungsrate
+		\item[Class 6] mit 6 MByte/s Mindestübertragungsrate
+		\item[Class 8] mit 8 MByte/s Mindestübertragungsrate
 \end{description}
 
 Mit den unteren Übertragungsraten, also mit Class 2 und 4 soll es kaum Probleme geben.
@@ -154,7 +179,7 @@ Der Raspberry Pi Model B hat neben den fünf Status LEDs und dem Ethernet An-schl
 	\label{tab:SchnittstellenDesRaspberry}
 		\begin{tabular}{|c|l|}
 		\hline
-		\tableRowHeader{Anschluss}  & \tableRowHeader{Beschreibung}  					     			\\ \hline
+		\tableRowHeader{Anschluss}  & \tableRowHeader{Beschreibung} \\ \hline
 		\multirow{2}{*}{S1}  & Micro USB-Anschluss			   			\\
 		                     &  (für die Stromversorgung) 	 		\\ \hline
 	  S2                   & DSI-Anschluss  									\\ \hline
@@ -178,7 +203,7 @@ Die Folgende Tabelle Listet die verfügbaren GPIO Pins des Raspberry Pis auf:\\
 	\label{tab:GPIOAnschlüssedesRaspberry}
 		\begin{tabular}{|c|l|}
 		\hline
-		\textbf{Anschluss}            & \textbf{Beschreibung}  \\ \hline
+		\textbf{Anschluss}   & \textbf{Beschreibung}  \\ \hline
 		P1       					   & GPIO Steckerleiste; 2x 13 Pins\\ \hline
 	  \multirow{2}{*}{P2}  & JTAG für GPU; Für 8 Pins  \\
                          &  (keine angeschlossenen Pins) \\ \hline

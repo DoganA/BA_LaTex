@@ -12,13 +12,13 @@ MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=32
 NormalPos.right=1561
-NormalPos.bottom=555
+NormalPos.bottom=658
 Class=LaTeXView
 Document=MiniBspDeckblatt.tex
 
 [Frame0_View0,0]
-TopLine=52
-Cursor=2646
+TopLine=36
+Cursor=1465
 
 [Frame1]
 Flags=0
@@ -30,13 +30,13 @@ MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=32
 NormalPos.right=1561
-NormalPos.bottom=555
+NormalPos.bottom=658
 Class=LaTeXView
 Document=999_Optionen.tex
 
 [Frame1_View0,0]
-TopLine=38
-Cursor=1817
+TopLine=0
+Cursor=2845
 
 [Frame2]
 Flags=0
@@ -48,13 +48,13 @@ MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=32
 NormalPos.right=1561
-NormalPos.bottom=555
+NormalPos.bottom=658
 Class=LaTeXView
-Document=Deckblatt.tex
+Document=2_Konzept_Aufgabenstellung.tex
 
 [Frame2_View0,0]
-TopLine=16
-Cursor=529
+TopLine=0
+Cursor=1
 
 [Frame3]
 Flags=0
@@ -66,15 +66,51 @@ MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=32
 NormalPos.right=1561
-NormalPos.bottom=555
+NormalPos.bottom=658
 Class=LaTeXView
-Document=3_Kap\3_4_S0_Schnittstelle.tex
+Document=3_Kap\3_5_Datendarstellung.tex
 
 [Frame3_View0,0]
-TopLine=32
-Cursor=2027
+TopLine=71
+Cursor=4205
+
+[Frame4]
+Flags=0
+ShowCmd=1
+MinPos.x=-1
+MinPos.y=-1
+MaxPos.x=-1
+MaxPos.y=-1
+NormalPos.left=4
+NormalPos.top=32
+NormalPos.right=1561
+NormalPos.bottom=658
+Class=LaTeXView
+Document=3_Kap\3_1_Beschreibung_des_Raspberry_Pi.tex
+
+[Frame4_View0,0]
+TopLine=27
+Cursor=2719
+
+[Frame5]
+Flags=0
+ShowCmd=1
+MinPos.x=-1
+MinPos.y=-1
+MaxPos.x=-1
+MaxPos.y=-1
+NormalPos.left=4
+NormalPos.top=32
+NormalPos.right=1561
+NormalPos.bottom=658
+Class=LaTeXView
+Document=Deckblatt.tex
+
+[Frame5_View0,0]
+TopLine=14
+Cursor=668
 
 [SessionInfo]
-FrameCount=4
-ActiveFrame=1
+FrameCount=6
+ActiveFrame=0
 
