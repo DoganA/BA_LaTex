@@ -31,8 +31,8 @@
 	%fleqn,								% Ausgabe von Gleichungen linksbündig
 	%draft								% überlangen Zeilen in Ausgabe gekennzeichnet
 	bibliography = totoc,			% include bib in toc
-	listof=totoc,				% include listof entries in toc
-	listof=entryprefix,				% include listof entries in toc
+	listof = totoc,				% include listof entries in toc
+	listof = entryprefix,				% Präfix in Tabellen und Abbildungsverzeichniss
 	titlepage= on,				% own page for each title page
 	captions= tableabove, %platzierung der Beschreibung
 	%tocindent,
@@ -87,18 +87,20 @@
 \usepackage{longtable}							% pagebreak tables
 \usepackage{booktabs}								% bold table lines, e.g. \toprule
 \usepackage{tabularx}								% neue Tabular-Umgebung
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Tabellen Farbe
 \usepackage{colortbl}
 \usepackage{xcolor}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Packages für Grafiken & Abbildungen %%%%%%%%%%%%%%%%%%%%%%
 \usepackage{graphicx} %%Zum Laden von Grafiken
 \usepackage{float} % unterdrückt, dass Bilder ins falsche Kapitel getan werden (mit eckiger Klammer mit [H])
 
+%%Für die Färbung jedes 2ten Bibliographie eintrags
 \usepackage{tikz}
 \usetikzlibrary{tikzmark}
 \usetikzlibrary{calc}
+
 %\usepackage{subfig} %%Teilabbildungen in einer Abbildung
 %\usepackage{pst-all} %%PSTricks - nicht verwendbar mit pdfLaTeX
 
