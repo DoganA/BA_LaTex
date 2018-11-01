@@ -7,7 +7,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Optionen zum Layout des Buchs                                     %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\documentclass[a4paper, 11pt,
+\documentclass[a4paper, 12pt,
 	%a5paper,							% alle weiteren Papierformat einstellbar
 	%landscape,						% Querformat
 	%10pt,								% Schriftgröße (12pt, 11pt (Standard))
@@ -18,26 +18,27 @@
 	%twocolumn,						% zweispaltiger Satz
 	openany,							% Kapitel können auch auf linken Seiten beginnen
 	%halfparskip*,				% Absatzformatierung s. scrguide 3.1
+	%parskip=half,
 	headsepline,					% Trennline zum Seitenkopf	
 	footsepline,					% Trennline zum Seitenfuß
 	%notitlepage,					% in-page-Titel, keine eigene Titelseite
 	%chapterprefix,				% vor Kapitelüberschrift wird "Kapitel Nummer" gesetzt
 	%appendixprefix,				% Anhang wird "Anhang" vor die Überschrift gesetzt
-	%normalheadings,			% Überschriften etwas kleiner (smallheadings)
+	normalheadings,				 % Überschriften etwas kleiner (smallheadings)
 	%idxtotoc,						% Index im Inhaltsverzeichnis
 	%liststotoc,					% Abb.- und Tab.verzeichnis im Inhalt
 	%bibtotoc,						% Literaturverzeichnis im Inhalt
 	%leqno,								% Nummerierung von Gleichungen links
 	%fleqn,								% Ausgabe von Gleichungen linksbündig
 	%draft								% überlangen Zeilen in Ausgabe gekennzeichnet
-	bibliography = totoc,			% include bib in toc
-	listof=totoc,				% include listof entries in toc
-	listof=entryprefix,				% include listof entries in toc
-	titlepage= on,				% own page for each title page
-	captions= tableabove, %platzierung der Beschreibung
-	%tocindent,
+	bibliography = totoc,	 % Literaturverzeichnis im Inhalt
+	listof = totoc,				 % Abb.- und Tab.verzeichnis im Inhalt
+	listof = entryprefix,	 % include listof entries in toc
+	titlepage = on,				 % own page for each title page
+	captions= tableabove,  %platzierung der Beschreibung
+	tocindent,
 	ngerman
-	%,bibtotocnumbered
+	%bibtotocnumbered
 ]
 {scrbook}
 %% Bibliographiestil %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -64,7 +65,8 @@
 \usepackage[T1]{fontenc}
 \usepackage[ngerman]{babel}
 \usepackage{mathptmx} % Hier steckt Times drin
-
+\usepackage[scaled]{uarial}
+\renewcommand*{\familydefault}{\sfdefault}	%Setzt den standart auf Serifenlose schrift
 \usepackage{lmodern}
 
 \usepackage[margin = 10pt, labelfont=bf]{caption}						% table headers
@@ -81,12 +83,12 @@
 
 \usepackage{listings}								%Quellcode
 %% tables
+\usepackage{tabularx}								% neue Tabular-Umgebung
+\usepackage{longtable}							% pagebreak tables
 \usepackage{multicol} 							% multiple columns in tables
 \usepackage{multirow}								% multiple rows in tables
 \usepackage{hhline}									% horizontal lines
-\usepackage{longtable}							% pagebreak tables
 \usepackage{booktabs}								% bold table lines, e.g. \toprule
-\usepackage{tabularx}								% neue Tabular-Umgebung
 
 % Tabellen Farbe
 \usepackage{colortbl}
@@ -116,6 +118,7 @@
 \usepackage{amsmath, amssymb, amsthm}
 \usepackage{geometry}
 %\usepackage{tocloft}
+\usepackage{indentfirst} %Erzeugt einzug direkt nach Kapitel
 
 \usepackage{scrpage2}
 \pagestyle{scrheadings}
