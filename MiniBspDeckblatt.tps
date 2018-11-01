@@ -17,8 +17,8 @@ Class=LaTeXView
 Document=MiniBspDeckblatt.tex
 
 [Frame0_View0,0]
-TopLine=39
-Cursor=1729
+TopLine=60
+Cursor=3037
 
 [Frame1]
 Flags=0
@@ -74,7 +74,25 @@ Document=4_Kap\4_Anforderungsdefinition_Pflichtenheft.tex
 TopLine=0
 Cursor=224
 
+[Frame4]
+Flags=0
+ShowCmd=1
+MinPos.x=-1
+MinPos.y=-1
+MaxPos.x=-1
+MaxPos.y=-1
+NormalPos.left=4
+NormalPos.top=32
+NormalPos.right=1561
+NormalPos.bottom=658
+Class=LaTeXView
+Document=3_Kap\3_1_Beschreibung_des_Raspberry_Pi.tex
+
+[Frame4_View0,0]
+TopLine=63
+Cursor=4848
+
 [SessionInfo]
-FrameCount=4
+FrameCount=5
 ActiveFrame=0
 
