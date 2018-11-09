@@ -38,7 +38,7 @@
 %%% Tabellen und Abbildungs Verzeichniss formatierung: Es wird so formatiert, dass
 %%% Prfäx Fettgedruckt und getrent zum Text mit einem : ist (Quelle: https://komascript.de/node/1911)
 \addtokomafont{captionlabel}{\bfseries} %nötig, für fettdruck
-\addtokomafont{captionlabel}{\uline} %nötig, für unterstrich
+\addtokomafont{captionlabel}{\underline} %nötig, für unterstrich
 
 %Grafik
 \renewcommand*\listoflofentryname{\bfseries\figurename}
@@ -49,8 +49,14 @@
 \renewcommand*\listoflotentryname{\bfseries\tablename}
 \BeforeStartingTOC[lot]{\renewcommand*\autodot{:}}
 
+%\KOMAoption{listof}{entryprefix}
+\newcommand{\listoflolentryname}{\bfseries\lstlistingname}
+\BeforeStartingTOC[lol]{\renewcommand*\autodot{:}}
+%\AfterTOCHead[lol]{\renewcommand*\autodot{:}} %%Quelle: https://golatex.de/viewtopic,p,61775.html
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%% Im Text Tab. und Abb. Captions werden Fett und unterstrichenn ausgegeben
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Im Text Tab. und Abb. Captions werden Fett ausgegeben
 \makeatletter
 \renewcommand\caption@@make[2]{%
   \centering\underline{\textbf{#1:}}~#2}

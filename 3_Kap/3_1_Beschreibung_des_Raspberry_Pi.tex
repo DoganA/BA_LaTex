@@ -208,6 +208,8 @@ Der Raspberry Pi Model B hat neben den fünf Status LEDs und dem Ethernet An-schl
 Die Folgende Tabelle Listet die verfügbaren GPIO Pins des Raspberry Pis auf:\\
 
 
+
+
 \begin{table}[!h] 
 	\centering
 	\caption{GPIO Anschlüsse des Raspberry}
@@ -252,7 +254,7 @@ Die Schnittstelle P6 bietet die Möglichkeit eines Hardware-Rests an. Darüber wir
 Die GPIO-Schnittstelle mit der Bezeichnung P1 stellt die Basis für weitergehende Projekte dar. Durch die GPIO-Schnittstelle kann der Raspberry Pi mit Schaltungen, Platinen usw. um Funktionalitäten erweitert werden. In diesem Kapitel wird diese GPIO- Schnittstelle mit der Anschlussbezeichnung P1 näher beschrieben, da diese Schnittstelle nicht nur für die eigentlichen Erweiterungen, sondern auch in dieser Arbeit für die Erweiterung SD0 von Busware verwendet wird.
 Die Schnittstelle selbst arbeitet intern mit einer Spannung von 3,3 Volt. Die Zufuhr von höheren Spannungen als 3,3 Volt oder der Kurzschluss der 5 Volt Pins, mit den anderen GPIO-Pins könnte den Raspberry Pi zerstören [vgl. Upt2014 S. 222].
 
-\begin{figure}[htbp] 
+\begin{figure}[!h] 
   \caption{Schaltung des GPIO Steckerleiste von Raspberry Pi Model B}
   \label{fig:Schaltung des GPIO Steckerleiste von Raspberry Pi Model B}
 	\centering
@@ -266,7 +268,7 @@ Beim Raspberry Pi erfüllt jede GPIO Pin eine bestimmte Aufgabe. Einige Pins habe
 \label{sec:LAN9512}
 Das in dieser Arbeit eingesetzte Raspberry Pi Model B hat einen LAN9512. Der LAN9512 ist neben den SoC BCM2835 der zweite Chip auf dem Raspberry Pi Model B. Es beinhaltet verschiedene Einheiten, wie einen LAN-Controller und den USB Hub.
 
-\begin{figure}[htbp]
+\begin{figure}[!h]
 	\caption{Prinzipschaltbild des LAN9512}
 	\label{fig:LAN9512}
 	\centering
