@@ -6,7 +6,7 @@ Version=4
 MainFile=MiniBspDeckblatt.tex
 UseBibTeX=1
 UseMakeIndex=1
-ActiveProfile=LaTeX ⇨ PDF
+ActiveProfile=LaTeX ⇨ PDF(biber)
 ProjectLanguage=de
 ProjectDialect=DE
 

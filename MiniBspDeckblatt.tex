@@ -22,9 +22,10 @@
 	headsepline,					% Trennline zum Seitenkopf	
 	footsepline,					% Trennline zum Seitenfuß
 	%notitlepage,					% in-page-Titel, keine eigene Titelseite
-	%chapterprefix,				% vor Kapitelüberschrift wird "Kapitel Nummer" gesetzt
+	chapterprefix,				% vor Kapitelüberschrift wird "Kapitel Nummer" gesetzt
 	%appendixprefix,				% Anhang wird "Anhang" vor die Überschrift gesetzt
-	normalheadings,				 % Überschriften etwas kleiner (smallheadings)
+	%normalheadings,				 % Überschriften etwas kleiner (smallheadings)
+	headings=normal,				 % Überschriften etwas kleiner (smallheadings)
 	%idxtotoc,						% Index im Inhaltsverzeichnis
 	%liststotoc,					% Abb.- und Tab.verzeichnis im Inhalt
 	%bibtotoc,						% Literaturverzeichnis im Inhalt
@@ -36,7 +37,8 @@
 	listof = entryprefix,	 % include listof entries in toc
 	titlepage = on,				 % own page for each title page
 	captions= tableabove,  %platzierung der Beschreibung
-	tocindent,
+	%tocindent,
+	toc=graduated,
 	ngerman
 	%bibtotocnumbered
 ]
@@ -55,7 +57,6 @@
 ]{biblatex}
 \addbibresource{Literatur.bib}
 \DeclareNameAlias{sortname}{last-first}
-\usepackage[babel,german=quotes]{csquotes}
 
 %\pagestyle{empty}		% keine Kopf und Fußzeile (k. Seitenzahl)
 %\pagestyle{headings}	% lebender Kolumnentitel  
@@ -70,6 +71,13 @@
 \renewcommand*{\familydefault}{\sfdefault}	%Setzt den standart auf Serifenlose schrift
 \usepackage{lmodern}
 
+%%Dient der Einrückung con description Aufzählungen
+\usepackage{enumitem}
+\setdescription{%
+  labelindent=1cm %\parindent
+}
+
+\usepackage[babel,german=quotes]{csquotes}
 %\usepackage[margin = 10pt, labelfont=bf]{caption}						% table headers
 
 
@@ -83,7 +91,8 @@
 %\usepackage{ae, aeguill}
 
 \usepackage{listings}								%Quellcode
-
+\usepackage{scrhack}		% <- ergänzt
+\usepackage{caption}
 %% tables
 \usepackage{tabularx}								% neue Tabular-Umgebung
 \usepackage{longtable}							% pagebreak tables
@@ -125,7 +134,7 @@
 %\usepackage{tocloft}
 \usepackage{indentfirst} %Erzeugt einzug direkt nach Kapitel
 
-\usepackage{scrpage2}
+\usepackage{scrlayer-scrpage}
 \pagestyle{scrheadings}
 %% \usepackage[authoryear]{natbib}
 %% \bibliographystyle{alpha}
@@ -140,7 +149,9 @@
 
 \begin{document}
 
-\pagestyle{scrheadings}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%Fuß- und Kopfzeile
+%\pagestyle{scrheadings}
 \clearscrheadfoot
 \ihead{\headmark}
 \ofoot{Seite  $\vert$ \pagemark}
@@ -226,8 +237,8 @@
 \input{9_Zusammenfassung_und_Ausblick}
 
 \appendix							% Beginn des Anhangs
-\pagenumbering{Roman}
 \newpage
+\pagenumbering{Roman}
 %\addcontentsline{toc}{chapter}{Tabellenverzeichnis}
 \listoftables				% Tabellenverzeichnis
 

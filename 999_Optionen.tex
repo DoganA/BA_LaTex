@@ -37,29 +37,36 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Tabellen und Abbildungs Verzeichniss formatierung: Es wird so formatiert, dass
 %%% Prfäx Fettgedruckt und getrent zum Text mit einem : ist (Quelle: https://komascript.de/node/1911)
-\addtokomafont{captionlabel}{\bfseries} %nötig, für fettdruck
+\newcaptionname{ngerman}{\listoflolentryname}{\lstlistingname}
 
-%Grafik
-\renewcommand*\listoflofentryname{\bfseries\figurename}
-	%\renewcaptionname{ngerman}{\figurename}{Abb.}
-\BeforeStartingTOC[lof]{\renewcommand*\autodot{:}}
+\newcommand\entrywithprefixformat[1]{%
+\def\autodot{:}%
+\bfseries\underline{#1}%
+}
 
-%Tabellen
-\renewcommand*\listoflotentryname{\bfseries\tablename}
-\BeforeStartingTOC[lot]{\renewcommand*\autodot{:}}
+\DeclareTOCStyleEntry[
+	entrynumberformat=\entrywithprefixformat,
+	dynnumwidth
+]{default}{figure}
 
-%\KOMAoption{listof}{entryprefix}
-\newcommand{\listoflolentryname}{\bfseries\lstlistingname}
-\BeforeStartingTOC[lol]{\renewcommand*\autodot{:}}
-%\AfterTOCHead[lol]{\renewcommand*\autodot{:}} %%Quelle: https://golatex.de/viewtopic,p,61775.html
+\DeclareTOCStyleEntry[
+	entrynumberformat=\entrywithprefixformat,
+	dynnumwidth
+]{default}{table}
 
+\DeclareTOCStyleEntry[
+	level=1,
+	indent=1.5em,
+	numwidth=2.3em,
+	entrynumberformat=\entrywithprefixformat,
+	dynnumwidth
+]{default}{lstlisting}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% Im Text Tab. und Abb. Captions werden Fett ausgegeben
-\makeatletter
-\renewcommand\caption@@make[2]{%
-  \centering\underline{\textbf{#1:}}~#2}
-\makeatother
+\DeclareCaptionFormat{underline}{\underline{#1:}#2#3}
+\captionsetup{format=underline,labelsep=space,labelfont=bf}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%Bibliographie jede 2. Eintrag Hintergrundfarbe.
 \newcounter{zebrabibentry}
@@ -88,7 +95,7 @@
 
 \newcommand*{\zebrabibstart}[2][]{%
   \tikz[remember picture,overlay]
-  \draw[line width=1pt,rectangle,
+  \draw[line width=0pt,rectangle,
     draw=\ifodd\value{zebrabibentry}white\else blue!20\fi,
     fill=\ifodd\value{zebrabibentry}white\else blue!10\fi,]
     let \p1=(pic cs:#2) in

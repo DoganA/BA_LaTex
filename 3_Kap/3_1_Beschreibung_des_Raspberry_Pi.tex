@@ -20,7 +20,7 @@ welches Modell des Raspberry Pi ausgewählt wird und dieses beschrieben.
 \begin{table}
     \caption{Eigenschaften des Raspberry Pi}
     \label{tab:EigenschaftendesRaspberryPitabelle}
-    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+    \hspace*{-2cm}\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
     \hline
     \multicolumn{2}{|c|}{\textbf{\uline{Eigenschaften}}}            &         \textbf{\uline{Modell A}}  & \textbf{\uline{Modell A+}} &         \textbf{\uline{Modell B}} & \textbf{\uline{Modell B+}} & \textbf{\uline{Raspberry Pi 2 Model B}} \\ \hline
 \multirow{3}{*}{Gesamtgrösse (in mm)} & Länge  & 93        & 70,4        & \multicolumn{3}{c|}{93}                         \\ \cline{2-10} 
@@ -133,12 +133,18 @@ einsetzbaren SD-Karten handelt es sich um folgende Karten \cite[vgl.][64]{Dem201
 Die SDHC-Karte lässt sich wiederum in verschiedene Klassen unterteilen. Diese
 Klassen sind Abstufungen der Mindestübertragungsrate der Karte. Diese lassen sich folgendermaßen aufteilen \cite[vgl.][66]{Dem2013}:
 
-\begin{description}
+%\begin{description}
+		%\item[   ]
+\begin{setlength}{\leftmargini}{3cm}
+	\begin{description}
+%		\item[ ]
 		\item[Class 2] mit 2 MByte/s Mindestübertragungsrate
 		\item[Class 4] mit 4 MByte/s Mindestübertragungsrate
 		\item[Class 6] mit 6 MByte/s Mindestübertragungsrate
 		\item[Class 8] mit 8 MByte/s Mindestübertragungsrate
-\end{description}
+	\end{description}
+\end{setlength}
+%\end{description}
 
 Mit den unteren Übertragungsraten, also mit Class 2 und 4 soll es kaum Probleme geben.
 Mit den höherklassigen SD-Karten, also mit Class 6 und 8, kann es jedoch Kompatibilitätsprobleme
